@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Dice</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="hidden" role="dialog" aria-label="Dice table">
+    <div class="rail">
+      <div class="felt">
+
+        <header class="top">
+          <h1 id="heading">Dice table</h1>
+          <div class="wallet">Cash <strong id="balance">0</strong></div>
+          <button id="btn-close" class="icon" aria-label="Close">&times;</button>
+        </header>
+
+        <!-- Roll solo, or pick an opponent and a bet -->
+        <section id="view-setup" class="view hidden">
+          <p id="setup-hint" class="hint"></p>
+          <div id="bet-block" class="bet-block">
+            <ul id="player-list" class="players"></ul>
+            <div class="bet-row">
+              <label for="bet">Bet per player</label>
+              <div class="bet-input"><span id="cur">$</span><input id="bet" type="number" inputmode="numeric" step="1" min="1" value="100"></div>
+              <div id="quick" class="quick"></div>
+            </div>
+          </div>
+          <div class="actions">
+            <button id="btn-solo" class="ghost">Roll solo</button>
+            <button id="btn-send" class="primary" disabled>Send invite</button>
+          </div>
+        </section>
+
+        <!-- Solo: no bet, no money -->
+        <section id="view-solo" class="view hidden">
+          <div class="solo-stage">
+            <div class="lane" id="lane-solo">
+              <h2>Your roll</h2>
+              <div class="dice"></div>
+              <div class="total" id="total-solo">–</div>
+            </div>
+          </div>
+          <p id="solo-status" class="status" aria-live="polite">Just for fun. No bets, no money.</p>
+          <div class="actions">
+            <button id="btn-solo-roll" class="primary">Roll again</button>
+            <button id="btn-solo-close" class="ghost">Close</button>
+          </div>
+        </section>
+
+        <!-- Waiting for the other player to accept -->
+        <section id="view-waiting" class="view hidden">
+          <p id="waiting-text" class="lead"></p>
+          <div class="actions"><button id="btn-cancel" class="ghost">Cancel invite</button></div>
+        </section>
+
+        <!-- Someone invited you -->
+        <section id="view-invite" class="view hidden">
+          <p id="invite-text" class="lead"></p>
+          <p class="hint">Both players roll two dice. The higher total takes the pot. Ties roll again.</p>
+          <div class="countdown"><i id="countdown-bar"></i></div>
+          <div class="actions">
+            <button id="btn-accept" class="primary">Accept and bet</button>
+            <button id="btn-decline" class="ghost">Decline</button>
+          </div>
+        </section>
+
+        <!-- The game -->
+        <section id="view-game" class="view hidden">
+          <div class="lanes">
+            <div class="lane" id="lane-me">
+              <h2>You</h2>
+              <div class="dice"></div>
+              <div class="total" id="total-me">–</div>
+            </div>
+            <div class="pot">
+              <span>Pot</span>
+              <strong id="pot"></strong>
+              <small id="round"></small>
+            </div>
+            <div class="lane" id="lane-opp">
+              <h2 id="name-opp">Opponent</h2>
+              <div class="dice"></div>
+              <div class="total" id="total-opp">–</div>
+            </div>
+          </div>
+          <p id="status" class="status" aria-live="polite"></p>
+          <div class="actions">
+            <button id="btn-roll" class="primary">Roll dice</button>
+            <button id="btn-leave" class="ghost">Leave table</button>
+          </div>
+
+          <div id="banner" class="banner hidden">
+            <strong id="banner-title"></strong>
+            <span id="banner-sub"></span>
+            <button id="btn-done" class="primary">Done</button>
+          </div>
+        </section>
+
+        <!-- Cancelled / declined / expired -->
+        <section id="view-message" class="view hidden">
+          <p id="message-text" class="lead"></p>
+          <div class="actions"><button id="btn-message-ok" class="primary">Close</button></div>
+        </section>
+
+      </div>
+    </div>
+    <div id="toasts" aria-live="polite"></div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
